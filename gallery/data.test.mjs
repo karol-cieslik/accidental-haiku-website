@@ -35,7 +35,7 @@ test("does not expose private submission properties to public gallery", () => {
   assert.equal(row.publishedAt, "2026-11-24");
 });
 test("accepts only bare public-looking HTTP(S) references", () => {
-  for (const url of ["javascript:alert(1)", "file:///tmp/private", "https://example.org/x?token=secret", "https://example.org/x#private", "https://name:pass@example.org", "http://localhost/foo", "https://example.org"]) {
+  for (const url of ["javascript:alert(1)", "file:///tmp/private", "https://example.org/x?token=secret", "https://example.org/x#private", "https://name:pass@example.org", "http://localhost/foo", "http://127.0.0.1/a", "http://192.168.1.4/", "http://10.0.0.1/", "http://172.16.4.1/", "https://notes.local/x", "https://mail.google.com/mail/u/0", "https://example.org"]) {
     assert.equal(!!safeSource(url), url === "https://example.org", url);
   }
 });
