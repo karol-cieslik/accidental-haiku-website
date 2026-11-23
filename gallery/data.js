@@ -17,10 +17,10 @@ export function safeSource(raw) {
     // Never publish URL metadata from an obvious private network or account app.
     // This is only a safety filter; a moderator must verify public accessibility.
     if (host.startsWith("[") || host === "localhost" ||
-        /\\.(?:localhost|local|internal|lan|test)$/.test(host) ||
-        /^(?:127|10|0)\\./.test(host) || /^192\\.168\\./.test(host) ||
-        /^169\\.254\\./.test(host) ||
-        /^172\\.(?:1[6-9]|2\\d|3[01])\\./.test(host) ||
+        /\.(?:localhost|local|internal|lan|test)$/.test(host) ||
+        /^(?:127|10|0)\./.test(host) || /^192\.168\./.test(host) ||
+        /^169\.254\./.test(host) ||
+        /^172\.(?:1[6-9]|2\d|3[01])\./.test(host) ||
         ["mail.google.com", "outlook.live.com", "outlook.office.com",
          "web.whatsapp.com", "app.slack.com", "discord.com", "chatgpt.com",
          "chat.openai.com", "drive.google.com"].includes(host)) return null;
