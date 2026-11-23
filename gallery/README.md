@@ -22,7 +22,10 @@ Add a JSON object to ./approved.json:
   "lines": ["Original first line", "Original second line", "Original third line"],
   "sourceTitle": "Source title / author",
   "sourceUrl": "https://public.example/article",
-  "rightsNote": "Documented public-domain / valid license / authorization evidence"
+  "rightsNote": "Documented public-domain / valid license / authorization evidence",
+  "discoveredAt": "2026-11-23",
+  "publishedAt": "2026-11-24",
+  "sourcePublishedAt": null
 }
 ```
 
@@ -57,11 +60,11 @@ The contact address is intentionally unspecified; no inbox is configured or rece
 
 - Website stays a **static GitHub Pages project** at `/gallery/` under the existing public site; the intended Pages address must be verified once deployed.
 - **Recurring cost target: €0.** No paid domain, database, storage plan, tracking service or server.
-- Next optional schema fields: `discoveredAt` (when discovered, if trustworthy), `publishedAt` (when approved entry first appeared), `sourcePublishedAt` (verified original article date, otherwise `null`). Use ISO dates, and do not infer dates from Git commit timestamps for older records.
+- **Implemented on this draft branch:** optional `discoveredAt` (date of discovery, if trustworthy), `publishedAt` (gallery first publication date), and `sourcePublishedAt` (verified original article date, otherwise omitted or `null`). All three use strict `YYYY-MM-DD` dates; unknown dates are not inferred from Git history. Shared validation protects the curator CLI and browser gallery. Six Node regression tests cover dates and privacy allowlisting.
 - Preserve original webpage URL and title even if it goes offline, but do not imply that lost sources remain independently verifiable or republish text without adequate rights.
 - **No screenshots** or stored poem-card images. Create downloadable/shareable cards locally on request.
 - No automatic source-page archiving. Do not publish user email, private moderation records or unapproved text in `approved.json` or Git history.
 - Ads: **future separate decision only**, after verified users, meaningful editorial value, rights review, and reassessment of GitHub Pages commercial-use limits. No ad SDK, ad tags or analytics in this PR.
 - Initial publications are manually approved with the offline curator workflow. There is **no public receiving endpoint**.
 
-**Codex next action:** implement the optional date fields with robust validation/tests and appropriate display, preserve all existing data and the root privacy URL, and verify the public URL (do not claim it is live without opening it).
+**Codex next action:** review and browser-test the **already implemented** optional date fields, preserve all data and the root privacy URL, and verify the public address. Do not claim the gallery is live until deployment is independently confirmed.
