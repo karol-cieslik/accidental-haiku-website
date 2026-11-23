@@ -31,3 +31,17 @@ Before adding: independently verify 5/7/5 syllables; verify consecutive original
 ## Release gates
 
 Do not enable submissions until extension testing, user interest, legal/privacy review and a private moderation route are complete. The extension project roadmap is in `Accidental-Haiku/docs/COMMUNITY_GALLERY_ROADMAP.md` (draft PR #2).
+
+## Low-cost manual moderation (no backend)
+
+The first 10–20 real entries can be handled entirely by a private email inbox or another separately configured contact route, without public submissions or a database. Do **not** publish the submitter's email address, the original private message, or unreviewed content in this repository.
+
+1. Receive the user's deliberately sent proposal via a contact route that has its own accurate privacy notice.
+2. Independently check that the source page is public, wording remains verbatim, syllables total 5/7/5, no personal data appears, and publication rights are established. Request legal review where needed.
+3. Store the **private** moderation record outside this public repository.
+4. Create a local JSON file with only the approved public fields shown above.
+5. Run `node gallery/add-approved.mjs path/to/local-reviewed.json --approve`.
+6. Run `node gallery/validate.mjs` and inspect the diff before merging. The CLI checks structure only; the human must check syllables and rights.
+7. For takedown, remove the entry from `approved.json`, commit, publish, and verify caches/search indexing; handle private records according to the retention policy.
+
+The contact address is intentionally unspecified; no inbox is configured or receiving submissions yet.
