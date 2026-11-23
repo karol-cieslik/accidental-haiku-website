@@ -1,22 +1,8 @@
+import { validEntry, safeSource, dateLabels } from "./data.js";
 // Public display only: this module NEVER accepts a submission or uploads browsing data.
 const output = document.querySelector("#gallery");
 const status = document.querySelector("#status");
 const count = document.querySelector("#count");
-function safeSource(raw) {
-  try {
-    const url = new URL(raw);
-    if (!["https:", "http:"].includes(url.protocol) || url.username || url.password || url.search || url.hash) return null;
-    return url;
-  } catch { return null; }
-}
-function valid(row) {
-  return row && typeof row.id === "string" && /^[a-z0-9-]{1,64}$/.test(row.id) &&
-    Array.isArray(row.lines) && row.lines.length === 3 &&
-    row.lines.every(line => typeof line === "string" && line.trim() && line.length <= 180) &&
-    typeof row.sourceTitle === "string" && row.sourceTitle.length <= 120 &&
-    typeof row.rightsNote === "string" && row.rightsNote.trim() &&
-    safeSource(row.sourceUrl);
-}
 function element(tag, cls, content) {
   const node = document.createElement(tag);
   if (cls) node.className = cls;
@@ -32,6 +18,18 @@ function draw(row) {
     quote.append(document.createTextNode(line));
   });
   const src = element("p", "source", row.sourceTitle);
+  const dates = dateLabels(row);
+  const metadata = dates.length ? element("div", "date-metadata") : null;
+  if (metadata) for (const [label, date] of dates) {
+    const detail = element("span", "date-item");
+    detail.append(document.createTextNode(label + " "));
+    const time = element("time", null, new Intl.DateTimeFormat("en", {
+      dateStyle: "medium", timeZone: "UTC",
+    }).format(new Date(date + "T00:00:00Z")));
+    time.dateTime = date;
+    detail.append(time);
+    metadata.append(detail);
+  }
   const footer = element("div", "card-footer");
   const source = element("a", null, "View original source");
   source.href = safeSource(row.sourceUrl).href;
@@ -49,7 +47,9 @@ function draw(row) {
     catch { share.textContent = "Copy unavailable"; }
   });
   footer.append(source, share);
-  article.append(label, quote, src, footer);
+  article.append(label, quote, src);
+  if (metadata) article.append(metadata);
+  article.append(footer);
   return article;
 }
 async function load() {
@@ -57,7 +57,7 @@ async function load() {
     const response = await fetch("./approved.json", { cache: "no-store" });
     if (!response.ok) throw Error("Unable to load entries");
     const rows = await response.json();
-    if (!Array.isArray(rows) || !rows.every(valid)) throw Error("Invalid curated entries");
+    if (!Array.isArray(rows) || !rows.every(validEntry)) throw Error("Invalid curated entries");
     const seen = new Set();
     const unique = rows.filter(row => {
       if (seen.has(row.id)) return false;
