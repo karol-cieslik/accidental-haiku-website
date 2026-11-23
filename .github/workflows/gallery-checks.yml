@@ -16,5 +16,10 @@ jobs:
           node-version: '22'
       - name: Validate approved entries and privacy-policy location
         run: node gallery/validate.mjs
+      - name: Test gallery metadata, date validation and privacy allowlist
+        run: node --test gallery/data.test.mjs
       - name: Syntax check gallery JavaScript
-        run: node --check gallery/gallery.js
+        run: |
+          node --check gallery/gallery.js
+          node --check gallery/data.js
+          node --check gallery/add-approved.mjs
