@@ -45,3 +45,23 @@ The first 10–20 real entries can be handled entirely by a private email inbox 
 7. For takedown, remove the entry from `approved.json`, commit, publish, and verify caches/search indexing; handle private records according to the retention policy.
 
 The contact address is intentionally unspecified; no inbox is configured or receiving submissions yet.
+
+## Confirmed zero-cost data and hosting direction (23 November 2026)
+
+**Primary reference documents in the private extension repository**:
+- [Zero-cost architecture](https://github.com/karol-cieslik/Accidental-Haiku/blob/docs/community-gallery-roadmap/docs/GALLERY_ZERO_COST_ARCHITECTURE.md)
+- [Codex handover for 24 Nov 2026](https://github.com/karol-cieslik/Accidental-Haiku/blob/docs/community-gallery-roadmap/docs/CODEX_HANDOVER_2026-11-24.md)
+- [Revised community roadmap](https://github.com/karol-cieslik/Accidental-Haiku/blob/docs/community-gallery-roadmap/docs/COMMUNITY_GALLERY_ROADMAP.md)
+
+**Public repo note:** These private-repository links require owner access. Keep all public-facing website policy text self-contained; never make visitors follow private references.
+
+- Website stays a **static GitHub Pages project** at `/gallery/` under the existing public site; the intended Pages address must be verified once deployed.
+- **Recurring cost target: €0.** No paid domain, database, storage plan, tracking service or server.
+- Next optional schema fields: `discoveredAt` (when discovered, if trustworthy), `publishedAt` (when approved entry first appeared), `sourcePublishedAt` (verified original article date, otherwise `null`). Use ISO dates, and do not infer dates from Git commit timestamps for older records.
+- Preserve original webpage URL and title even if it goes offline, but do not imply that lost sources remain independently verifiable or republish text without adequate rights.
+- **No screenshots** or stored poem-card images. Create downloadable/shareable cards locally on request.
+- No automatic source-page archiving. Do not publish user email, private moderation records or unapproved text in `approved.json` or Git history.
+- Ads: **future separate decision only**, after verified users, meaningful editorial value, rights review, and reassessment of GitHub Pages commercial-use limits. No ad SDK, ad tags or analytics in this PR.
+- Initial publications are manually approved with the offline curator workflow. There is **no public receiving endpoint**.
+
+**Codex next action:** implement the optional date fields with robust validation/tests and appropriate display, preserve all existing data and the root privacy URL, and verify the public URL (do not claim it is live without opening it).
