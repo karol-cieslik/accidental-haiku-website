@@ -1,5 +1,5 @@
-import { publicRecord, validEntry } from "./data.js";
 #!/usr/bin/env node
+import { publicRecord, validEntry } from "./data.js";
 /**
  * Offline curator tool. Reads a rights-reviewed JSON entry and copies ONLY
  * approved public fields into the static gallery. No network or user accounts.
