@@ -68,3 +68,9 @@ The contact address is intentionally unspecified; no inbox is configured or rece
 - Initial publications are manually approved with the offline curator workflow. There is **no public receiving endpoint**.
 
 **Codex next action:** review and browser-test the **already implemented** optional date fields, preserve all data and the root privacy URL, and verify the public address. Do not claim the gallery is live until deployment is independently confirmed.
+
+## Release review · 24 November 2026
+
+The empty collection, the labelled demonstration, and the local review fixture were exercised in Chromium headless shell at widths of 320, 390 and 1280 pixels. The fixture covered optional dates, literal text, outbound link attributes, copying, removal and rejection of unexpected private metadata. No fixture was added to approved.json. Validation and all six Node tests passed.
+
+GitHub reported Pages disabled. Both the root and gallery URLs returned HTTP 404. When the publisher approves hosting, publish the root privacy policy first and confirm it loads anonymously before entering its URL in the Store dashboard. The gallery and any reader intake are separate release decisions.

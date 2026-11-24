@@ -12,7 +12,7 @@ export function safeSource(raw) {
   try {
     const url = new URL(raw);
     if (!(url.protocol === "https:" || url.protocol === "http:")) return null;
-    const host = url.hostname.toLowerCase();
+    const host = url.hostname.toLowerCase().replace(/\.$/, "");
     if (!host.includes(".") || url.username || url.password || url.search || url.hash) return null;
     // Never publish URL metadata from an obvious private network or account app.
     // This is only a safety filter; a moderator must verify public accessibility.
@@ -27,8 +27,12 @@ export function safeSource(raw) {
     return url;
   } catch { return null; }
 }
+const publicFields = new Set([
+  "id", "lines", "sourceTitle", "sourceUrl", "rightsNote",
+  "discoveredAt", "publishedAt", "sourcePublishedAt",
+]);
 export function validEntry(row) {
-  return !!(row && typeof row === "object" &&
+  return !!(row && typeof row === "object" && Object.keys(row).every(key => publicFields.has(key)) &&
     typeof row.id === "string" && /^[a-z0-9-]{1,64}$/.test(row.id) &&
     Array.isArray(row.lines) && row.lines.length === 3 &&
     row.lines.every(line => typeof line === "string" && !!line.trim() && line.length <= 180) &&
